@@ -1,9 +1,9 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 #create blueprint
 views = Blueprint('views', __name__)
 
 #route
-@views.route('/sign-up')
+@views.route('/')
 def sign_up():
-    return ('<h1>sign-up</h1>')
+    return render_template('home.html')
