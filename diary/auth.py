@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash
 
 #create blueprint
 auth = Blueprint('auth', __name__)
@@ -18,9 +18,6 @@ def sign_in():
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
-        # 데이터 확인
-        data = request.form
-
         # form - input의 name 속성을 기준으로 가져오기
         email = request.form.get('email')
         nickname = request.form.get('nickname')
@@ -29,15 +26,16 @@ def sign_up():
 
         # 유효성 검사
         if len(email) < 5 :
-            pass
+            flash('이메일은 5자 이상입니다', category='error')
         elif len(nickname) < 2:
-            pass
+            flash('닉네임은 2자 이상입니다', category='error')
         elif password1 != password2 :
-            pass
+            flash('비밀번호가 서로 다릅니다', category='error')
         elif len(password1) < 7:
-            pass
-        else:
-            pass  # Create User -> DB
+            flash('비밀번호가 너무 짧습니다', category='error')
+        else: # Create User -> DB
+            flash('회원가입', category='success')
+
 
     return render_template('sign_up.html')
 
